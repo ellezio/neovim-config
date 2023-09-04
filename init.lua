@@ -1,1 +1,1 @@
-require("pavko")
+require("config")
