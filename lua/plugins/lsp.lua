@@ -1,13 +1,21 @@
+local deps = {
+	{ 'j-hui/fidget.nvim', opts = {} },
+
+	'folke/neodev.nvim',
+	'folke/neoconf.nvim',
+}
+
+if IsNixOS == false then
+	table.insert(deps, 'williamboman/mason.nvim')
+	table.insert(deps, 'williamboman/mason-lspconfig.nvim')
+end
+
+
 return {
 	{
 		'neovim/nvim-lspconfig',
 
-		dependencies = {
-			{ 'j-hui/fidget.nvim', opts = {} },
-
-			'folke/neodev.nvim',
-			'folke/neoconf.nvim',
-		},
+		dependencies = deps,
 
 		config = function()
 			require('neoconf').setup()
@@ -91,10 +99,24 @@ return {
 			)
 
 			local lspconfig = require('lspconfig')
-			for server_name, server in pairs(servers) do
-				server = server or {}
-				server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-				lspconfig[server_name].setup(server)
+
+			if IsNixOS then
+				for server_name, server in pairs(servers) do
+					server = server or {}
+					server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+					lspconfig[server_name].setup(server)
+				end
+			else
+				require('mason').setup()
+				require('mason-lspconfig').setup({
+					handlers = {
+						function(server_name)
+							local server = servers[server_name] or {}
+							server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+							lspconfig[server_name].setup(server)
+						end,
+					},
+				})
 			end
 		end
 	},

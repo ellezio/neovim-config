@@ -1,3 +1,5 @@
+IsNixOS = vim.fn.executable('nixos-version') == 1
+
 require('options')
 require('keymaps')
 require('autocmds')
