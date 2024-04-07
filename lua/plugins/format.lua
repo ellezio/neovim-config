@@ -5,6 +5,7 @@ return {
 		opts = {
 			formatters_by_ft = {
 				nix = { 'nixpkgs_fmt' },
+				templ = { 'templ' },
 			},
 			format_on_save = {
 				timeout_ms = 500,

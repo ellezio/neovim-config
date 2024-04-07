@@ -66,6 +66,8 @@ return {
 				lua_ls = {},
 				gopls = {},
 				templ = {},
+				html = {},
+				htmx = {},
 				jsonls = {},
 
 				intelephense = {
