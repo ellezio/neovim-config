@@ -1,17 +1,22 @@
 return {
 	{
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-		'folke/tokyonight.nvim',
-		lazy = false,
+		"catppuccin/nvim",
+		name = "catppuccin",
 		priority = 1000,
 		opts = {
-			style = 'night',
-			light_style = 'moon',
-			transparent = true,
-			styles = {
-				sidebars = 'transparent',
-				floats = 'transparent',
+			transparent_background = true,
+			term_colors            = false,
+			default_integrations   = true,
+			integrations           = {
+				cmp = true,
+				dap = true,
+				dap_ui = true,
+				gitsigns = true,
+				neotree = true,
+				treesitter = true,
+				fidget = true,
+				which_key = true
 			},
-		},
-	},
+		}
+	}
 }
