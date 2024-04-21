@@ -1,5 +1,15 @@
 local deps = {
-	{ 'j-hui/fidget.nvim', opts = {} },
+	{
+		'j-hui/fidget.nvim',
+
+		opts = {
+			notification = {
+				window = {
+					winblend = 0,
+				},
+			},
+		},
+	},
 
 	'folke/neodev.nvim',
 	'folke/neoconf.nvim',
@@ -46,7 +56,7 @@ return {
 					nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
 					nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-					nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+					nmap('<C-s>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
 					nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 					nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')

@@ -15,7 +15,11 @@ return {
 				neotree = true,
 				treesitter = true,
 				fidget = true,
-				which_key = true
+				which_key = true,
+				aerial = true,
+				telescope = {
+					enable = true,
+				},
 			},
 		}
 	}
