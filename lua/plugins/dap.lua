@@ -44,5 +44,23 @@ return {
         program = "${file}",
       },
     }
+
+    dap.adapters.php = {
+      type = 'executable',
+      command = 'node',
+      args = { os.getenv("HOME") .. '/debug-adapters/vscode-php-debug/out/phpDebug.js' },
+    }
+
+    dap.configurations.php = {
+      {
+        name = 'Listen for Xdebug',
+        type = 'php',
+        request = 'launch',
+        port = 9000,
+        pathMappings = {
+          ['/var/www/html'] = '${workspaceFolder}',
+        },
+      }
+    }
   end,
 }

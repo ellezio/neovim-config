@@ -79,13 +79,15 @@ return {
 				html = {},
 				htmx = {},
 				jsonls = {},
+				cssls = {},
+				rust_analyzer = {},
 
 				intelephense = {
 					single_file_support = true,
 					settings = {
 						intelephense = {
 							environment = {
-								phpVersion = os.getenv('PHP_VERSION') or '8.0',
+								phpVersion = os.getenv('PHP_VERSION') or '7.3',
 							},
 						},
 					},
@@ -109,6 +111,12 @@ return {
 					border = 'rounded'
 				}
 			)
+
+			vim.diagnostic.config({
+				float = {
+					border = "rounded"
+				},
+			})
 
 			local lspconfig = require('lspconfig')
 
