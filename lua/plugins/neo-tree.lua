@@ -16,6 +16,9 @@ return {
 				filesystem = {
 					hijack_netrw_behavior = 'open_current',
 				},
+				window = {
+					position = "float",
+				},
 			})
 
 			require("lsp-file-operations").setup()
