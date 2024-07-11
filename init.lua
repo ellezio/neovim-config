@@ -18,7 +18,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-	-- 'tpope/vim-sleuth',
+	'tpope/vim-sleuth',
 
 	{
 		'eandrju/cellular-automaton.nvim',

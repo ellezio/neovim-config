@@ -37,10 +37,10 @@ vim.opt.cursorline = true
 
 vim.opt.scrolloff = 8
 
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = false
-vim.opt.softtabstop = -1
+-- vim.opt.tabstop = 4
+-- vim.opt.shiftwidth = 4
+-- vim.opt.expandtab = false
+-- vim.opt.softtabstop = -1
 
 vim.opt.completeopt = 'menuone,noselect'
 
