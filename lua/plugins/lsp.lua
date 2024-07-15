@@ -81,6 +81,7 @@ return {
 				jsonls = {},
 				cssls = {},
 				rust_analyzer = {},
+				tsserver = {},
 
 				intelephense = {
 					single_file_support = true,
