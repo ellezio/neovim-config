@@ -14,7 +14,7 @@ return {
 					templ = { 'templ' },
 				},
 
-				format_on_save = function(bufnr)
+				format_after_save = function(bufnr)
 					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
 						return
 					end
@@ -25,6 +25,18 @@ return {
 						lsp_fallback = false,
 					}
 				end,
+
+				-- format_on_save = function(bufnr)
+				-- 	if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+				-- 		return
+				-- 	end
+				--
+				-- 	return {
+				-- 		timeout_ms = 500,
+				-- 		async = true,
+				-- 		lsp_fallback = false,
+				-- 	}
+				-- end,
 			})
 
 			vim.api.nvim_create_user_command("FormatDisable", function(args)
