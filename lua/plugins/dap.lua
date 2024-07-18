@@ -22,6 +22,8 @@ return {
 		end, { desc = 'Debug: Set Breakpoint' })
 
 		vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+		vim.keymap.set('n', '<M-k>', dapui.eval, { desc = 'Debug: evaluate expression under cursor.' })
+		vim.keymap.set('v', '<M-k>', dapui.eval, { desc = 'Debug: evaluate selected expression.' })
 
 		dap.listeners.after.event_initialized['dapui_config'] = dapui.open
 		dap.listeners.before.event_terminated['dapui_config'] = dapui.close
