@@ -10,16 +10,31 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
 
+
+      neovimConfig = (pkgs.neovimUtils.makeNeovimConfig { });
+
+      init = pkgs.writeText "init.lua" ''
+        print('It works')
+      '';
+
+      extraWrapperArgs = [ "--add-flags" "-u ${init}" ];
+
+      finalePackage = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
+        neovimConfig
+        // {
+          wrapRc = false;
+          wrapperArgs = neovimConfig.wrapperArgs ++ extraWrapperArgs;
+        }
+      );
+
       nvim = pkgs.symlinkJoin {
         name = "my-nvim";
         paths = [
-          (pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped
-            (pkgs.neovimUtils.makeNeovimConfig { })
-          // { wrapRc = false; }
-          )
+          finalePackage
         ];
         meta.mainProgram = "nvim";
       };
+
     in
     {
       packages.${system}.default = nvim;
