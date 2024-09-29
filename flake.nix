@@ -8,6 +8,7 @@
   outputs = inputs@{ nixpkgs, ... }:
     let
       system = "x86_64-linux";
+      name = "my-nvim";
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
@@ -36,34 +37,47 @@
 
       neovimConfig = (pkgs.neovimUtils.makeNeovimConfig { inherit plugins; });
 
-      # TODO Separate lua files
-      luaRcContent = ''
-        -- ### Options ###
-        ${builtins.readFile ./lua/options.lua}
-
-        -- ### Telescope ###
-        ${builtins.readFile ./lua/plugins/telescope.lua}
-
-        -- ### Init ###
-        ${builtins.readFile ./init.lua}
-      '';
+      config-drv = pkgs.stdenv.mkDerivation {
+        name = "${name}-config";
+        src = ./.;
+        phases = [ "unpackPhase" "installPhase" ];
+        installPhase = ''
+          mkdir -p $out/${name}
+          cp -r $src/* $out/${name}
+        '';
+      };
 
       finalePackage = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped
         (
-          neovimConfig // { inherit luaRcContent; }
+          neovimConfig // {
+            wrapRc = false;
+            wrapperArgs = neovimConfig.wrapperArgs ++ [
+              "--set"
+              "XDG_CONFIG_HOME"
+              "${config-drv}"
+
+              "--set"
+              "NVIM_APPNAME"
+              name
+
+              "--add-flags"
+              "-u ${config-drv}/${name}/init.lua"
+            ];
+            packpathDirs.myNeovimPackages.start = neovimConfig.packpathDirs.myNeovimPackages.start ++ [ config-drv ];
+          }
         );
 
       nvim = pkgs.symlinkJoin {
-        name = "my-nvim";
+        inherit name;
         paths = [
           (pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped (
             finalePackage
           ))
         ];
-        meta. mainProgram = "nvim";
+        meta.mainProgram = "nvim";
       };
     in
     {
-      packages.${ system}. default = nvim;
+      packages.${system}.default = nvim;
     };
 }
