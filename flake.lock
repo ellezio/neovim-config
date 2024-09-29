@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "blackjack-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1695454858,
+        "narHash": "sha256-Zp88778F0eerNGCpFVBWvofCEd64k3lyxOr9IQc8guI=",
+        "owner": "alanfortlink",
+        "repo": "blackjack.nvim",
+        "rev": "cf59e79de25b87a3ef68b92b3277c50d4b345a92",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alanfortlink",
+        "repo": "blackjack.nvim",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1724224976,
@@ -16,9 +32,27 @@
         "type": "github"
       }
     },
+    "nvim-lsp-file-operations": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1718462620,
+        "narHash": "sha256-FeqmybXQeZUHv/td2QTLxUZeWSblRhDqwDx9ih0A5DM=",
+        "owner": "antosha417",
+        "repo": "nvim-lsp-file-operations",
+        "rev": "92a673de7ecaa157dd230d0128def10beb56d103",
+        "type": "github"
+      },
+      "original": {
+        "owner": "antosha417",
+        "repo": "nvim-lsp-file-operations",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "blackjack-nvim": "blackjack-nvim",
+        "nixpkgs": "nixpkgs",
+        "nvim-lsp-file-operations": "nvim-lsp-file-operations"
       }
     }
   },
