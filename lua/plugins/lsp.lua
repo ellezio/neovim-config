@@ -53,14 +53,16 @@ return {
 					nmap('gI', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
 					nmap('<leader>D', telescope_builtin.lsp_type_definitions, 'Type [D]efinition')
 					nmap('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
-					nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+					nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols,
+						'[W]orkspace [S]ymbols')
 
 					nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 					nmap('<C-s>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
 					nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 					nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-					nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+					nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder,
+						'[W]orkspace [R]emove Folder')
 					nmap('<leader>wl', function()
 						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 					end, '[W]orkspace [L]ist Folders')
@@ -78,10 +80,20 @@ return {
 				templ = {},
 				html = {},
 				htmx = {},
-				jsonls = {},
+				jsonls = {
+					settings = {
+						schemas = {
+							{
+								fileMatch = { "tsconfig*.json" },
+								url = "https://json.schemastore.org/tsconfig.json"
+							}
+						}
+					},
+				},
 				cssls = {},
 				rust_analyzer = {},
 				tsserver = {},
+				clangd = {},
 
 				intelephense = {
 					single_file_support = true,
@@ -124,7 +136,8 @@ return {
 			if IsNixOS then
 				for server_name, server in pairs(servers) do
 					server = server or {}
-					server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+					server.capabilities = vim.tbl_deep_extend('force', {}, capabilities,
+						server.capabilities or {})
 					lspconfig[server_name].setup(server)
 				end
 			else
@@ -133,7 +146,8 @@ return {
 					handlers = {
 						function(server_name)
 							local server = servers[server_name] or {}
-							server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+							server.capabilities = vim.tbl_deep_extend('force', {},
+								capabilities, server.capabilities or {})
 							lspconfig[server_name].setup(server)
 						end,
 					},
