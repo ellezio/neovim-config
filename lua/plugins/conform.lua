@@ -22,7 +22,7 @@ return {
 					return {
 						timeout_ms = 500,
 						async = true,
-						lsp_fallback = false,
+						lsp_fallback = true,
 					}
 				end,
 

@@ -34,6 +34,8 @@ return {
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 				callback = function(ev)
+					vim.lsp.inlay_hint.enable(true)
+
 					local nmap = function(keys, func, desc)
 						if desc then
 							desc = 'LSP: ' .. desc
@@ -76,24 +78,24 @@ return {
 			local servers = {
 				nil_ls = {},
 				lua_ls = {},
-				gopls = {},
+				gopls = {
+					settings = {
+						gopls = {
+							["ui.inlayhint.hints"] = {
+								compositeLiteralFields = true,
+								constantValues = true,
+								parameterNames = true
+							},
+						}
+					}
+				},
 				templ = {},
 				html = {},
-				htmx = {},
-				jsonls = {
-					settings = {
-						schemas = {
-							{
-								fileMatch = { "tsconfig*.json" },
-								url = "https://json.schemastore.org/tsconfig.json"
-							}
-						}
-					},
-				},
+				-- htmx = {},
+				jsonls = {},
 				cssls = {},
 				rust_analyzer = {},
-				tsserver = {},
-				clangd = {},
+				ts_ls = {},
 
 				intelephense = {
 					single_file_support = true,
@@ -138,6 +140,7 @@ return {
 					server = server or {}
 					server.capabilities = vim.tbl_deep_extend('force', {}, capabilities,
 						server.capabilities or {})
+					server.inlay_hints = { enable = true }
 					lspconfig[server_name].setup(server)
 				end
 			else
